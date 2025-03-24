@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: coffee-v2
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      chat:
+        options:
+          model: gpt-3.5-turbo
+      base-url: https://api.openai.com/v1/chat/completions
+
+# maria DB
+  datasource:
+    url: jdbc:mariadb://localhost:3306/coffee
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+server:
+  port: 2525
