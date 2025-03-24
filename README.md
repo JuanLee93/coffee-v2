@@ -3,7 +3,6 @@ Coffee 프로젝트
 📌 프로젝트 소개
 - Coffee는 팀 내에서 커피를 사는 순서를 관리하는 API 기반 서비스입니다.
 - backend mybatis 에서 jpa로 마이그레이션 했습니다.
-- java 11 + springboot 2.0 에서 java 17 + springboot 3.0으로 마이그레이션 했습니다.
 
 🚀 주요 기능
 
