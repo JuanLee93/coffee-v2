@@ -12,6 +12,7 @@ Coffee 프로젝트
 - API Endpoint: api/v1/account/getAllAccount
 
 - Response JSON:
+```
 [
     {
         "id": 1,
@@ -38,6 +39,7 @@ Coffee 프로젝트
         "buy": false
     }
 ]
+```
 
 2️⃣ 커피 구매 순서 조회 API
 - 다음 커피를 살 멤버를 확인할 수 있습니다.
@@ -46,11 +48,13 @@ Coffee 프로젝트
 - API Endpoint: /api/v1/account/getBuyerByCurrentDate
 
 - Response JSON:
+```
 {
     "buyerInform": "오늘의 커피 계산은 이주안 님 입니다.",
     "dateInform": "오늘의 날짜는 THURSDAY 입니다.",
     "message": "오늘은 커피를 먹는날!"
 }
+```
 (모든 멤버가 한 번씩 샀다면 "reset": true 반환)
 
 🛠 기술 스택
