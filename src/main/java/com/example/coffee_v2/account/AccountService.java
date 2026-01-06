@@ -22,7 +22,7 @@ import java.util.List;
 @Slf4j
 public class AccountService {
 
-    private final EntityManager entityManager;
+//    private final EntityManager entityManager;
     private final JPAQueryFactory jpaQueryFactory;
 
     List<Member> members = new ArrayList<>();
@@ -94,10 +94,6 @@ public class AccountService {
 
 
         return "없음."; // 예외 처리 (모든 사람이 커피를 샀다면)
-    }
-
-    public void temp(){
-        
     }
 
 }

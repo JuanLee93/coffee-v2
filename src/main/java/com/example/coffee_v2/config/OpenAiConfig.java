@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
-@Configuration
+//@Configuration
 public class OpenAiConfig {
 
     @Value("${spring.ai.openai.api-key}")
