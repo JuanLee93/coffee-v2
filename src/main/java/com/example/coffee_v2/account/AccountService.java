@@ -39,7 +39,7 @@ public class AccountService {
         LocalDate today = LocalDate.now();
 
         InformDto inform = new InformDto();
-        inform.setDateInform("오늘의 날짜는 " + today + "입니다.");
+        inform.setDateInform("오늘의 날짜는 " + today + " 입니다.");
 
         // redis 먼저 확인
         Optional<Long> cache = redisRepository.findTodayBuyer(today);
@@ -48,7 +48,9 @@ public class AccountService {
 
         if (cache.isPresent()) {
             member = getRepository.findById(cache.get())
-                    .orElseThrow(() -> new RuntimeException("DB에 회원 정보가 없습니다."));
+                .orElseThrow(
+                    () -> new RuntimeException("DB에 회원 정보가 없습니다.")
+                );
         } else {
 
             String buyer = this.getNextBuyer();
@@ -65,10 +67,9 @@ public class AccountService {
         // InformDTO 세팅
         inform.setBuyerInform(member.getName());
         inform.setMessage(
-                today.getDayOfWeek() == DayOfWeek.SATURDAY || today.getDayOfWeek() == DayOfWeek.SUNDAY
-                        ? "오늘은 휴일입니다. 커피를 사는 날이 아닙니다."
-                        : "오늘은 커피를 먹는날! 오늘의 커피 계산은 " + member.getName() + "님 입니다."
-
+            today.getDayOfWeek() == DayOfWeek.SATURDAY || today.getDayOfWeek() == DayOfWeek.SUNDAY
+                ? "오늘은 휴일입니다. 커피를 사는 날이 아닙니다."
+                : "오늘은 커피를 먹는날! 오늘의 커피 계산은 " + member.getName() + "님 입니다."
         );
 
         return inform;
