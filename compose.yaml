@@ -1,14 +1,15 @@
 services:
   mariadb:
-    image: 'mariadb:latest'
+    image: docker.io/library/mariadb:latest
+    container_name: coffee-mariadb
     environment:
-      - 'MARIADB_DATABASE=mydatabase'
-      - 'MARIADB_PASSWORD=secret'
-      - 'MARIADB_ROOT_PASSWORD=verysecret'
-      - 'MARIADB_USER=myuser'
+      MARIADB_DATABASE: coffee
+      MARIADB_ROOT_PASSWORD: root1234
     ports:
-      - '3306'
+      - "3306:3306"
+
   redis:
-    image: 'redis:latest'
+    image: docker.io/library/redis:latest
+    container_name: coffee-redis
     ports:
-      - '6379'
+      - "6379:6379"

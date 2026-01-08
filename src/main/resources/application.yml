@@ -13,12 +13,18 @@ spring:
   datasource:
     url: jdbc:mariadb://localhost:3306/coffee
     username: root
-    password: root0245
+    password: root1234
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        # 프로젝트 초기에 create 실행하고, 다음은 update로 변경하여 사용...
+#      ddl-auto: create
+      ddl-auto: update
     show-sql: true
+  security:
+    user:
+      password: ewndks12!@
 server:
   port: 2525
