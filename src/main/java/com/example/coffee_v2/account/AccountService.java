@@ -42,8 +42,8 @@ public class AccountService {
         InformDto inform = new InformDto();
         inform.setDateInform("오늘의 날짜는 " + today + " 입니다.");
 
-        // redis 먼저 확인
-        Optional<Long> cache = redisRepository.findTodayBuyer(today);
+        // db 먼저 확인
+        Optional<Long> cache = updateRepository.findTodayBuyer(today);
 
         Member member;
 
@@ -53,17 +53,15 @@ public class AccountService {
                     () -> new RuntimeException("DB에 회원 정보가 없습니다.")
                 );
         } else {
-
             String buyer = this.getNextBuyer();
-
             member = this.getAllAccount().stream()
                     .filter(m -> m.getName().equals(buyer))
                     .findFirst()
                     .orElseThrow();
-
-            // redis에 오늘 커피 산 사람 저장
-            updateRepository.saveTodayBuyer(today, member.getId());
         }
+
+        // db에 오늘 커피 산 사람 저장
+        updateRepository.saveTodayBuyer(today, member.getId());
 
         // InformDTO 세팅
         inform.setBuyerInform(member.getName());

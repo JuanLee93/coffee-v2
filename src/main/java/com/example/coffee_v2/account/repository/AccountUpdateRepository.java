@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  * 수정 담당 Repository
@@ -42,22 +44,29 @@ public class AccountUpdateRepository {
 
     // 오늘 커피 산사람을 저장
     public void saveTodayBuyer(LocalDate today, long memberId) {
-
-        boolean exists = getTodayBuyHistory(memberId, today);
-        if (exists) return;
-
         QMember m = QMember.member;
-        insertBuyHistory(today, memberId);
+
+        // member 테이블에 is_buy = true로 업데이트
         queryFactory.update(m)
                 .set(m.isBuy, true)
                 .where(m.id.eq(memberId))
                 .execute();
+
+        // 오늘 구매기록 있는지 확인, 있으면 리턴 (구매기록 저장x)
+        boolean exists = getTodayBuyHistory(memberId, today);
+        if (exists) return;
+
+        // 구매기록 저장
+        insertBuyHistory(today, memberId);
     }
 
     private boolean getTodayBuyHistory(long memberId, LocalDate today) {
         QBuyHistory h = QBuyHistory.buyHistory;
         return queryFactory.selectFrom(h)
-                .where(h.member.id.eq(memberId), h.buyDate.eq(today))
+                .where(
+                        h.member.id.eq(memberId),
+                        h.buyDate.between(today, today.plusDays(1))
+                )
                 .fetchCount() > 0;
     }
 
@@ -66,5 +75,16 @@ public class AccountUpdateRepository {
         Member memberRef = em.getReference(Member.class, memberId);
         BuyHistory history = new BuyHistory(memberRef, buyDate);
         em.persist(history);
+    }
+
+    public Optional<Long> findTodayBuyer(LocalDate today) {
+        QBuyHistory h = QBuyHistory.buyHistory;
+
+        Long memberId = queryFactory.select(h.member.id)
+                .from(h)
+                .where(h.buyDate.between(today, today.plusDays(1)))
+                .fetchFirst(); // 한 건만 가져오기
+
+        return Optional.ofNullable(memberId);
     }
 }

@@ -26,7 +26,7 @@ spring:
         # 프로젝트 초기에 create 실행하고, 다음은 update로 변경하여 사용
 #      ddl-auto: create
       ddl-auto: update
-    show-sql: true
+    show-sql: false
 
   # sping security password
   security:

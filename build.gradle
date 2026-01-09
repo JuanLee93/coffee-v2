@@ -55,6 +55,9 @@ dependencies {
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 //	developmentOnly 'org.springframework.ai:spring-ai-spring-boot-docker-compose'
+	// P6Spy
+	implementation 'p6spy:p6spy:3.9.1'
+	implementation 'com.github.gavlyukovskiy:datasource-decorator-spring-boot-autoconfigure:1.9.2'
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
