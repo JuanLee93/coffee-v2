@@ -18,7 +18,7 @@ public class RedisRepository {
     private final RedisTemplate<String, String> redisTemplate;
 
     private String key(LocalDate date) {
-        return "coffee:buyer" + date;
+        return "coffee:buyer:" + date;
     }
 
     public Optional<Long> findTodayBuyer(LocalDate date){

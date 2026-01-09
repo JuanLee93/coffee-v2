@@ -7,13 +7,13 @@ import com.example.coffee_v2.account.repository.AccountUpdateRepository;
 import com.example.coffee_v2.account.repository.RedisRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +28,7 @@ public class AccountService {
     private final RedisRepository redisRepository;
 
     // 전체 멤버를 조회
+    @Cacheable(value = "members", key = "'all'")
     @Transactional(readOnly = true)
     public List<Member> getAllAccount() {
         return getRepository.findAllMember();
@@ -61,7 +62,7 @@ public class AccountService {
                     .orElseThrow();
 
             // redis에 오늘 커피 산 사람 저장
-            redisRepository.saveTodayBuyer(today, member.getId(), Duration.ofDays(1));
+            updateRepository.saveTodayBuyer(today, member.getId());
         }
 
         // InformDTO 세팅

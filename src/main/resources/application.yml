@@ -33,6 +33,27 @@ spring:
     user:
       password: ewndks12!@
 
+  data:
+    redis:
+      # redis ip를 docker(podman) container에 띄운 redis와 연결하고 싶으면,
+      # host에 linux ip를 넣으면 되고 (명령어 : ip addr)
+      # 그냥 window에 설치한 redis와 연결하고 싶으면 localhost 라고 쓰면된다.
+      # host: localhost
+      host: 172.20.147.243
+      port: 6379
+
+  # cache type
+  cache:
+    type: redis
+    redis:
+      time-to-live: 10m
+
 # default port
 server:
   port: 2525
+
+# redis 연결되었나 확인용
+logging:
+  level:
+    org.springframework.cache: TRACE
+    org.springframework.data.redis.cache: TRACE
