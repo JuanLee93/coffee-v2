@@ -13,10 +13,9 @@ spring:
 
   # maria DB
   datasource:
-    url: jdbc:mariadb://localhost:3306/coffee
+    url: jdbc:mariadb://coffee-mariadb:3306/coffee
     username: root
     password: root0245
-#    password: root1234
     driver-class-name: org.mariadb.jdbc.Driver
 
   # jpa
@@ -40,7 +39,7 @@ spring:
       # host에 linux ip를 넣으면 되고 (명령어 : ip addr)
       # 그냥 window에 설치한 redis와 연결하고 싶으면 localhost 라고 쓰면된다.
       # host: localhost
-      host: 172.20.147.243
+      host: coffee-redis
       port: 6379
 
   # cache type

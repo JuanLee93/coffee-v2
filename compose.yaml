@@ -1,15 +1,41 @@
 services:
   mariadb:
-    image: docker.io/library/mariadb:latest
+    image: mariadb:latest
     container_name: coffee-mariadb
-    environment:
-      MARIADB_DATABASE: coffee
-      MARIADB_ROOT_PASSWORD: root1234
+    restart: always
     ports:
       - "3306:3306"
+    environment:
+      MARIADB_DATABASE: coffee
+      MARIADB_ROOT_PASSWORD: root0245
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   redis:
-    image: docker.io/library/redis:latest
+    image: redis:latest
     container_name: coffee-redis
+    restart: always
     ports:
       - "6379:6379"
+
+  app:
+    build: .
+    image: coffee-v2-app
+    container_name: coffee-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+
+volumes:
+  mariadb-data:
