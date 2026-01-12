@@ -9,6 +9,7 @@ import lombok.*;
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "member")
 public class Member {
 
     @Id

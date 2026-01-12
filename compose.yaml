@@ -4,6 +4,8 @@ services:
     container_name: coffee-mariadb
     restart: always
     ports:
+      # 왼쪽 : 현재 os (windows)에서 띄울 port 번호 / 오른쪽 : docker(linux)에서 띄울 port 번호
+#      - "3307:3306"
       - "3306:3306"
     environment:
       MARIADB_DATABASE: coffee
@@ -11,7 +13,7 @@ services:
     volumes:
       - mariadb-data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-uroot", "-proot1234"]
       interval: 10s
       timeout: 5s
       retries: 5
